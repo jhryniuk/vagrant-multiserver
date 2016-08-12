@@ -1,0 +1,7 @@
+lines:
+  - line: '^#server-id'
+    change: 'server-id = {{ server_id }}'
+  - line: '^#log_bin'
+    change: 'log_bin = /var/log/mysql/mysql-bin.log'
+
+master_db: {}

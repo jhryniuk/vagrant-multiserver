@@ -1,0 +1,23 @@
+---
+- name: Install nfs data server and nfs common
+  apt: name='{{ item }}'
+  with_items:
+    - nfs-kernel-server
+    - nfs-common
+
+- name: Ensure directory to export exist
+  file:
+    path: /data
+    state: directory
+    mode: 777
+    owner: vagrant
+    group: vagrant
+
+- name: Copy exports file.
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart nfs

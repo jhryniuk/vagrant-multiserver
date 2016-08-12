@@ -1,0 +1,15 @@
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install common tools
+  apt: name={{ item }} state=latest
+  with_items:
+    - software-properties-common
+    - python-pip
+    - git-core
+    - curl
+    - mc
+    - acl
+    - htop
+    - zip
+    - python-mysqldb
