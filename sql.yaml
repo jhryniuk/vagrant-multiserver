@@ -9,4 +9,4 @@
   roles:
     - tools
     - nfs
-    - mysql
+    - mariadb
