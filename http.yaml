@@ -1,10 +1,12 @@
 ---
 - name: Prepare basic environment for database replication between two servers.
-  hosts: dbs
+  hosts: http
   remote_user: vagrant
   become: yes
   become_method: sudo
   roles:
     - tools
     - nfs
-    - mariadb
+    - php
+    - nginx
+    - mysql-client
