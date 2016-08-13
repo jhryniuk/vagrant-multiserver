@@ -3,5 +3,15 @@
   file: path=/nfsData state=directory mode=777
   ignore_errors: True
 
-- name: Configure nfs entry in /etc/fstab dir
+- name: Create directory for nfs
+  file: path=/data state=directory mode=777
+  ignore_errors: True
+
+- name: Configure nfs entry in /etc/fstab file
   lineinfile: dest=/etc/fstab line="10.0.0.200:/data    /nfsData    nfs    defaults,ro    0 0"
+
+- name: Configure nfs entry in /etc/fstab file
+  lineinfile: dest=/etc/fstab line="10.0.0.200:/data    /data    nfs    defaults    0 0"
+
+- name: Mount all disks.
+  shell: "mount -a"

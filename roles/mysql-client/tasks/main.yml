@@ -1,0 +1,3 @@
+---
+- name: Install mysql client
+  apt: name=mysql-client state=latest

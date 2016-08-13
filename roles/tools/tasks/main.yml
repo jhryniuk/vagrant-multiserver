@@ -12,4 +12,5 @@
     - acl
     - htop
     - zip
+    - inotify-tools
     - python-mysqldb

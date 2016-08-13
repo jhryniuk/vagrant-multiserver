@@ -9,7 +9,7 @@
   file:
     path: /data
     state: directory
-    mode: 777
+    mode: 0777
     owner: vagrant
     group: vagrant
 
