@@ -7,9 +7,11 @@ Vagrant Multi Server
 * Two mysql servers with MariaDb engine
     * db01 - master, IP = `10.0.0.201`
     * db02 - slave, IP = `10.0.0.202`
+    
+Those two servers are connected by replication `master - slave`
+
 * Server with php5-fpm and nginx, http01 - IP = `10.0.0.203`
 
-Those two servers are connected by replication `master - slave`
 
 ### Requirements:
 
