@@ -4,7 +4,9 @@
   remote_user: vagrant
   become: yes
   become_method: sudo
+  vars_files:
+    - vars/db.yml
   roles:
     - tools
     - nfs
-    - mariadb
+    - db

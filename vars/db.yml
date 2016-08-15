@@ -1,0 +1,6 @@
+# Available versions of mysql engine are InnoDB and MariaDB
+# In order to install concrete version uncomment below line with apropriet version.
+# Default value InnoDB
+
+#db_engine: InnoDB
+db_engine: MariaDB
