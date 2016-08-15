@@ -1,9 +1,10 @@
 ---
 mariadb_version: 10.0
-mysql_conf_file: settings.cnf
 
 # Same keys as `mysql_users` above.
 mysql_replication_master: '10.0.0.201'
 mysql_replication_user:
   name: replicator
   password: r3p1ic4t0r
+
+db_engine: InnoDB

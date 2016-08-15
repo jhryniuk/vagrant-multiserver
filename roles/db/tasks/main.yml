@@ -1,0 +1,27 @@
+---
+- include: mariadb.yml
+  when: (db_engine == 'MariaDB')
+
+- name: Install MySQL
+  apt: name='{{ item }}' state=latest
+  with_items:
+    - mysql-client
+    - mysql-server
+  when: (db_engine == 'InnoDB')
+
+- name: Install MySQLdb Python package for secure installations.
+  apt: pkg=python-mysqldb state=present
+  when: mysql_secure_installation and mysql_root_password is defined
+
+- name: Add configuration
+  template: src=maria-my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
+  when: (db_engine == 'MariaDB')
+
+- name: Add configuration
+  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
+  when: (db_engine == 'InnoDB')
+
+- name: Restart mysql
+  service: name=mysql state=restarted
+
+- include: replication.yml

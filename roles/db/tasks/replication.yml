@@ -20,7 +20,7 @@
     and (mysql_replication_master != '')
 
 - name: Check master replication status.
-  mysql_replication: mode=getmaster
+  mysql_replication: mode=getmaster login_user=root login_password=''
   delegate_to: "{{ mysql_replication_master }}"
   remote_user: vagrant
   register: master

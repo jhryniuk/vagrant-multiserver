@@ -1,4 +1,3 @@
----
 - name: Add repo file
   template: src=mariadb_ubuntu.list.j2 dest=/etc/apt/sources.list.d/mariadb.list owner=root group=root mode=0644
   register: mariadb_list
@@ -20,15 +19,3 @@
   with_items:
     - mariadb-server
     - mariadb-client
-
-- name: Install MySQLdb Python package for secure installations.
-  apt: pkg=python-mysqldb state=present
-  when: mysql_secure_installation and mysql_root_password is defined
-
-- name: Add configuration
-  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
-
-- name: Restart mysql
-  service: name=mysql state=restarted
-
-- include: replication.yml
