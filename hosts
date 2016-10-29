@@ -1,7 +1,11 @@
 [nfs]
 nfs01 server_id=3 ansible_ssh_host=10.0.0.200
-[dbs]
-db01 server_id=1 ansible_ssh_host=10.0.0.201 mysql_replication_role='master'
-db02 server_id=2 ansible_ssh_host=10.0.0.202 mysql_replication_role='slave'
 [http]
-http01 ansible_ssh_host=10.0.0.203
+http01 ansible_ssh_host=10.0.0.201
+http02 ansible_ssh_host=10.0.0.202
+[hproxy]
+hp01 ansible_ssh_host=10.0.0.203
+hp02 ansible_ssh_host=10.0.0.204
+[dbs]
+db01 server_id=1 ansible_ssh_host=10.0.0.205 mysql_replication_role='master'
+db02 server_id=2 ansible_ssh_host=10.0.0.206 mysql_replication_role='slave'

@@ -50,3 +50,6 @@
     slave|failed
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')
+
+- name: Restart mysql
+  service: name=mysql state=restarted

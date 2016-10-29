@@ -107,8 +107,8 @@ log_slow_verbosity	= query_plan
 #       other settings you may need to change.
 server-id		= {{ server_id }}
 #report_host		= master1
-#auto_increment_increment = 2
-#auto_increment_offset	= 1
+auto_increment_increment = 2
+auto_increment_offset	= {{ server_id }}
 log_bin			= /var/log/mysql/mariadb-bin
 log_bin_index		= /var/log/mysql/mariadb-bin.index
 # not fab for performance, but safer

@@ -1,0 +1,11 @@
+---
+- name: Ensure that loadbalancing user check exists.
+  shell: mysql -u root -e "INSERT INTO mysql.user (Host,User) values ('10.0.0.204','haproxy_check'); FLUSH PRIVILEGES;"
+
+- name: Ensure that loadbalancing user root exists.
+  mysql_user:
+    name: haproxy_root
+    host: 10.0.0.204
+    password: pass
+    priv: '*.*:ALL'
+    state: present

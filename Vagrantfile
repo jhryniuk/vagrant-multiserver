@@ -15,13 +15,13 @@ Vagrant.configure(2) do |config|
       p.customize ["modifyvm", :id, "--memory", 512]
       p.customize ["modifyvm", :id, "--name", "nfs01"]
       p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
-      p.cpus = 2
+      p.cpus = 1
     end
 
     v.vm.provision "ansible" do |ansible|
       ansible.playbook = "nfs.yaml"
       ansible.inventory_path = "./hosts"
-      ansible.limit = "nfs01"
+      ansible.limit = "nfs"
     end
   end
 
@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
     v.vm.box = "ubuntu/trusty64"
     v.vm.box_check_update = true
 
-    v.vm.network "private_network", ip: "10.0.0.203"
+    v.vm.network "private_network", ip: "10.0.0.201"
 
     v.ssh.forward_agent = true
     v.vm.provider :virtualbox do |p|
@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
       p.customize ["modifyvm", :id, "--memory", 512]
       p.customize ["modifyvm", :id, "--name", "http01"]
       p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
-      p.cpus = 2
+      p.cpus = 1
     end
 
     v.vm.provision "ansible" do |ansible|
@@ -48,12 +48,81 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "http02" do |v|
+    v.vm.hostname = "http02"
+    v.vm.box = "ubuntu/trusty64"
+    v.vm.box_check_update = true
+
+    v.vm.network "private_network", ip: "10.0.0.202"
+
+    v.ssh.forward_agent = true
+    v.vm.provider :virtualbox do |p|
+      p.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      p.customize ["modifyvm", :id, "--memory", 512]
+      p.customize ["modifyvm", :id, "--name", "http02"]
+      p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
+      p.cpus = 1
+    end
+
+    v.vm.provision "ansible" do |ansible|
+      ansible.playbook = "http.yaml"
+      ansible.inventory_path = "./hosts"
+      ansible.limit = "http02"
+    end
+  end
+
+  config.vm.define "hp01" do |v|
+    v.vm.hostname = "hp01"
+    v.vm.box = "ubuntu/trusty64"
+    v.vm.box_check_update = true
+
+    v.vm.network "private_network", ip: "10.0.0.203"
+
+    v.ssh.forward_agent = true
+    v.vm.provider :virtualbox do |p|
+      p.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      p.customize ["modifyvm", :id, "--memory", 256]
+      p.customize ["modifyvm", :id, "--name", "hp01"]
+      p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
+      p.cpus = 1
+    end
+
+    v.vm.provision "ansible" do |ansible|
+      ansible.playbook = "haproxy.yaml"
+      ansible.inventory_path = "./hosts"
+      ansible.limit = "hp01"
+    end
+  end
+
+  config.vm.define "hp02" do |v|
+    v.vm.hostname = "hp02"
+    v.vm.box = "ubuntu/trusty64"
+    v.vm.box_check_update = true
+
+    v.vm.network "private_network", ip: "10.0.0.204"
+
+    v.ssh.forward_agent = true
+    v.vm.provider :virtualbox do |p|
+      p.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      p.customize ["modifyvm", :id, "--memory", 256]
+      p.customize ["modifyvm", :id, "--name", "hp02"]
+      p.customize ["modifyvm", :id, "--cpuexecutioncap", "80"]
+      p.cpus = 1
+    end
+
+    v.vm.provision "ansible" do |ansible|
+      ansible.playbook = "haproxy.yaml"
+      ansible.inventory_path = "./hosts"
+      ansible.limit = "hp02"
+    end
+  end
+
   config.vm.define "db01", primary: true do |v|
     v.vm.hostname = "db01"
     v.vm.box = "ubuntu/trusty64"
     v.vm.box_check_update = true
 
-    v.vm.network "private_network", ip: "10.0.0.201"
+    v.vm.network "private_network", ip: "10.0.0.205"
 
     v.ssh.forward_agent = true
     v.vm.provider :virtualbox do |p|
@@ -76,7 +145,7 @@ Vagrant.configure(2) do |config|
     v.vm.box = "ubuntu/trusty64"
     v.vm.box_check_update = true
 
-    v.vm.network "private_network", ip: "10.0.0.202"
+    v.vm.network "private_network", ip: "10.0.0.206"
 
     v.ssh.forward_agent = true
     v.vm.provider :virtualbox do |p|

@@ -1,0 +1,10 @@
+---
+- name: Prepare basic environment for hproxy server.
+  hosts: hproxy
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  roles:
+    - tools
+    - mysql-client
+    - haproxy
