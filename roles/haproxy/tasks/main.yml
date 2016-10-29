@@ -1,0 +1,17 @@
+---
+- name: Install haproxy
+  apt: name=haproxy
+
+- name: Enabling hproxy
+  lineinfile: dest=/etc/default/haproxy regexp=^ENABLED= line=ENABLED=1
+
+- name: Configure haproxy for web loadbalancer.
+  template: src=haproxy1.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  when: (ansible_ssh_host == "10.0.0.203")
+
+- name: Configure haproxy for db loadbalancer.
+  template: src=haproxy2.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  when: (ansible_ssh_host == '10.0.0.204')
+
+- name: Restart haproxy
+  service: name=haproxy state=restarted
