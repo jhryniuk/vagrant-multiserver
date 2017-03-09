@@ -10,6 +10,7 @@
     (mysql_replication_role == 'master')
     and mysql_replication_user
     and (mysql_replication_master != '')
+  notify: restart mysql
 
 - name: Check slave replication status.
   mysql_replication: mode=getslave
@@ -18,6 +19,7 @@
   when: >
     mysql_replication_role == 'slave'
     and (mysql_replication_master != '')
+  notify: restart mysql
 
 - name: Check master replication status.
   mysql_replication: mode=getmaster login_user=root login_password=''
@@ -28,6 +30,7 @@
     slave|failed
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')
+  notify: restart mysql
 
 - name: Configure replication on the slave.
   mysql_replication:
@@ -43,6 +46,7 @@
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')
     and mysql_replication_user
+  notify: restart mysql
 
 - name: Start replication.
   mysql_replication: mode=startslave
@@ -50,6 +54,3 @@
     slave|failed
     and (mysql_replication_role == 'slave')
     and (mysql_replication_master != '')
-
-- name: Restart mysql
-  service: name=mysql state=restarted

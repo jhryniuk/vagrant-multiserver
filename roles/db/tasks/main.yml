@@ -21,9 +21,6 @@
   template: src=my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
   when: (db_engine == 'InnoDB')
 
-- name: Restart mysql
-  service: name=mysql state=restarted
-
 - include: loadbalancing.yml
   ignore_errors: True
 

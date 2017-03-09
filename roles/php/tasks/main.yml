@@ -1,16 +1,77 @@
----
-- name: Install php
-  apt:
-    name: "{{ item }}"
-    state: latest
+- name: Install python-pycurl
+  apt: pkg=python-pycurl state=latest
+
+- name: Add php repository
+  apt_repository: repo='ppa:ondrej/php' state=present
+
+- name: Install PHP
+  apt: name="php{{ php_version }}" state=latest force=yes  update_cache=yes
+
+- name: Install PHP packages
+  apt: name={{ item }} state=latest force=yes
   with_items:
-    - php5
+    - php{{ php_version }}-cli
+    - php{{ php_version }}-gd
+    - php{{ php_version }}-mysql
+    - php{{ php_version }}-curl
+    - php{{ php_version }}-intl
+    - php{{ php_version }}-mcrypt
+    - php{{ php_version }}-imagick
+    - php{{ php_version }}-xml
+    - php{{ php_version }}-pdo
+    - php{{ php_version }}-sqlite3
+    - php{{ php_version }}-zip
+    - php{{ php_version }}-mbstring
+    - php{{ php_version }}-dom
+    - php{{ php_version }}-fpm
+    - php{{ php_version }}-memcached
+    - php{{ php_version }}-gettext
+    - php-gettext
+
+- name: Install missing os libraries for PHP
+  apt: name={{ item }} state=latest force=yes
+  with_items:
+    - memcached
+    - mysql-client
+    - gettext
+
+- name: Enable PHP Sqlite ext
+  shell: phpenmod -v ALL {{ item }}
+  with_items:
     - curl
-    - php5-curl
-    - php5-mcrypt
-    - php5-gd
-    - php5-imagick
-    - php5-fpm
-    - php-apc
-    - php5-memcached
-    - php5-mysql
+    - dom
+    - exif
+    - fileinfo
+    - gettext
+    - iconv
+    - intl
+    - json
+    - mcrypt
+    - opcache
+    - pdo
+    - pdo_mysql
+    - pdo_sqlite
+    - phar
+    - posix
+    - readline
+    - simplexml
+    - sqlite3
+    - tokenizer
+    - xml
+    - xmlreader
+    - xmlwriter
+    - xsl
+    - imagick
+    - mbstring
+
+- name: Install composer
+  get_url:
+    url: https://github.com/composer/composer/releases/download/{{ php_composer_version }}/composer.phar
+    dest: /usr/local/bin/composer
+    mode: 0755
+
+- name: Install Phing
+  get_url:
+    url: "{{ php_phing_url }}"
+    dest: /usr/local/bin/phing
+    mode: 0755
